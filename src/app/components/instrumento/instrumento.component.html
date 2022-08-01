@@ -1,0 +1,91 @@
+<style>
+    .container{
+    position:relative;
+    }
+    .cardInstrumentos{
+        display:flex;
+        align-items:center;
+        gap:4em;
+        border-bottom: 1px solid #333;
+        padding: 1em;
+    }
+    .cardInstrumentos h1{
+        font-weight: 700;
+        font-size: 22px;
+        margin: 0 0 4px 0;
+    }
+    .cardInstrumentos h2{
+        font-size: 20px;
+        color: #222;
+        padding:0;
+        margin: 12px 0 4px 0;
+    }
+    .cardInstrumentos span{
+        font-size: 12px;
+        display: block;
+    }
+    .cantVendidos{
+        color: #444;
+    }
+    /* ESTILOS PARA LOS BOTONES EDITAR Y ELIMINAR */
+    .actionsSection{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        justify-content: center;
+    }
+    .actionsSection button{
+        padding: 1em 2em;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        cursor: pointer;
+        color: #fff;
+        border: none;
+        outline: none;
+    }
+    button:hover{
+        opacity: 0.6;
+        transition: ease-in-out 0.4s;
+    }
+    .nuevoButton{
+        background-color: rgb(12, 144, 49);
+        color: #fff;
+        padding: 0.5em;
+        border:none;
+        cursor:pointer;
+    }
+    .searchInput{
+        margin: 1em 2em;
+        width:50%;
+        height:2em;
+        padding: 0.5em 1em;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        border-radius: 1em;
+    }
+</style>
+<div class="container">
+<div *ngIf="modal === true">
+    <app-modal [instrumentoEditar]="instrumentoSeleccionado"></app-modal>
+</div>
+    <form (submit)="buscarInstrumento()">
+        <input type="text" placeholder="Buscar instrumento..." class="searchInput" [(ngModel)]="search" [ngModelOptions]="{standalone: true}"/>
+    </form>
+    <button class="nuevoButton" (click)="openModal()">NUEVO INSTRUMENTO</button>
+    <article *ngFor="let instrumento of instrumentoService.instrumentos" class="cardInstrumentos">
+        <section>
+            <img src={{instrumento.imagen}} alt={{instrumento.nombre}} width="200"/>
+        </section>
+        <section>
+            <h1>{{instrumento.nombre}}</h1>
+            <span>Marca: {{instrumento.marca}}</span>
+            <span>Modelo: {{instrumento.modelo}}</span>
+            <h2>${{instrumento.precio}}</h2>
+            <span class="cantVendidos">{{instrumento.cantidadVendida}} vendidos</span>
+            <span *ngIf="instrumento.costoEnvio > 0" style="color: rgb(195, 134, 13)">El costo de envío es de: ${{instrumento.costoEnvio}}</span>
+            <span *ngIf="instrumento.costoEnvio === 0" style="color: rgb(13, 195, 22)">Envío gratis a todo el país</span>
+        </section>
+        <section class="actionsSection">
+            <button style="background-color: blue" (click)="editar(instrumento)">Editar</button>
+            <button style="background-color: red" (click)="deleteInstrumento(instrumento.id)">Eliminar</button>
+        </section>
+    </article>
+</div>

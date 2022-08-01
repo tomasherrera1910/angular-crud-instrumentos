@@ -1,0 +1,65 @@
+<style>
+    .modalStyle{
+        width:400px;
+        height: fit-content;
+        padding: 1em;
+        border: 1px solid #000;
+        position: fixed;
+        left: 0;
+        right: 0;
+        margin: auto;
+        margin-top: 3em;
+        background-color: #fff;
+        z-index: 9999;
+    }
+    .modalStyle label{
+        display: block;
+        margin-bottom: 0.5em;
+    }
+    .modalStyle form section{
+        display:flex;
+        justify-content:space-between;
+    }
+    .modalStyle form section button{
+        color: #fff;
+        padding: 0.2em;
+        border:none;
+        cursor:pointer;
+    }
+</style>
+<!-- MODAL -->
+<div class="container">
+<div class="modalStyle">
+    <form (submit)="addOrEditInstrumento()">
+        <label>INSTRUMENTO: 
+            <input type="text" [(ngModel)]="instrumentoEditar.nombre" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <label>MARCA: 
+            <input type="text" [(ngModel)]="instrumentoEditar.marca" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <label>MODELO: 
+            <input type="text" [(ngModel)]="instrumentoEditar.modelo" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <label>IMAGEN: 
+            <input type="text" [(ngModel)]="instrumentoEditar.imagen" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <label>PRECIO: 
+            <input type="number" [(ngModel)]="instrumentoEditar.precio" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <label>CANTIDAD VENDIDA: 
+            <input type="number" [(ngModel)]="instrumentoEditar.cantidadVendida" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <label>COSTO ENVÍO: 
+            <input type="number" [(ngModel)]="instrumentoEditar.costoEnvio" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <label>DESCRIPCIÓN: 
+            <input type="text" [(ngModel)]="instrumentoEditar.descripcion" [ngModelOptions]="{standalone: true}"/>
+        </label>
+        <section>
+            <button *ngIf="!instrumentoEditar.id" type="submit" style="background-color: blue;">NUEVO</button>
+            <button *ngIf="instrumentoEditar.id" type="submit" style="background-color: blue;">EDITAR</button>
+            <button type="button" (click)="closeModal()" style="background-color: red;">CERRAR</button>
+        </section>
+    </form>
+</div>
+</div>
